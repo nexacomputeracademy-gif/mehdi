@@ -1,0 +1,8 @@
+{
+  "name": "NC Computer Academy",
+  "description": "NC Computer Academy by nexa.creative05 — Bilingual Computer Science & Hardware Learning Platform with an interactive Three.js 3D PC Builder Lab. Learn. Explore. Build.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
