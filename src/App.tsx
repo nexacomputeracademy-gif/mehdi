@@ -7,6 +7,7 @@ import React from 'react';
 import { AcademyProvider, useAcademy } from './context/AcademyContext';
 import { ArticlesPage } from './components/ArticlesPage';
 import { Footer } from './components/Footer';
+import { GmailWorkspacePage } from './components/GmailWorkspacePage';
 import { HomePage } from './components/HomePage';
 import { LearningCenterPage } from './components/LearningCenterPage';
 import { LessonPage } from './components/LessonPage';
@@ -30,6 +31,12 @@ const AcademyShell: React.FC = () => {
         )}
         {route.view === 'articles' && (
           <ArticlesPage initialArticleId={route.articleId} />
+        )}
+        {route.view === 'mail' && (
+          <GmailWorkspacePage
+            prefillSubject={route.prefillSubject}
+            prefillBody={route.prefillBody}
+          />
         )}
       </div>
       {route.view !== 'lab' && <Footer />}

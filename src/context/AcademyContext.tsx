@@ -10,6 +10,7 @@ interface AcademyContextValue {
   completedLessons: string[];
   toggleLessonComplete: (lessonId: string) => void;
   markLessonComplete: (lessonId: string) => void;
+  resetProgress: () => void;
   quizScores: Record<string, number>;
   saveQuizScore: (lessonId: string, score: number) => void;
 }
@@ -35,7 +36,11 @@ export const AcademyProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [completedLessons, setCompletedLessons] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_COMPLETED_KEY);
-      return saved ? JSON.parse(saved) : [];
+      if (!saved) return [];
+      const parsed: unknown = JSON.parse(saved);
+      return Array.isArray(parsed)
+        ? parsed.filter((item): item is string => typeof item === 'string')
+        : [];
     } catch {
       return [];
     }
@@ -99,6 +104,17 @@ export const AcademyProvider: React.FC<{ children: React.ReactNode }> = ({ child
     });
   }, []);
 
+  const resetProgress = useCallback(() => {
+    setCompletedLessons([]);
+    setQuizScores({});
+    try {
+      localStorage.removeItem(STORAGE_COMPLETED_KEY);
+      localStorage.removeItem(STORAGE_QUIZ_KEY);
+    } catch {
+      // ignore
+    }
+  }, []);
+
   const saveQuizScore = useCallback((lessonId: string, score: number) => {
     setQuizScores((prev) => {
       const next = { ...prev, [lessonId]: Math.max(prev[lessonId] ?? 0, score) };
@@ -122,6 +138,7 @@ export const AcademyProvider: React.FC<{ children: React.ReactNode }> = ({ child
         completedLessons,
         toggleLessonComplete,
         markLessonComplete,
+        resetProgress,
         quizScores,
         saveQuizScore,
       }}

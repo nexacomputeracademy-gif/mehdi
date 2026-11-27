@@ -4,6 +4,7 @@ import {
   ArrowRight,
   Box,
   CheckCircle2,
+  Mail,
   RotateCcw,
   XCircle,
 } from 'lucide-react';
@@ -63,9 +64,23 @@ export const LessonPage: React.FC<{ lessonId: string }> = ({ lessonId }) => {
     }
   };
 
+  const handleShareViaGmail = () => {
+    const subject = `${t(lesson.title, lang)} — NC Computer Academy`;
+    const body = [
+      `${lesson.title.en} | ${lesson.title.ar}`,
+      '',
+      `${t(UI_STRINGS.lesson.definition, lang)}:`,
+      t(lesson.definition, lang),
+      '',
+      `${t(UI_STRINGS.lesson.summary, lang)}:`,
+      t(lesson.summary, lang),
+    ].join('\n');
+    navigate({ view: 'mail', prefillSubject: subject, prefillBody: body });
+  };
+
   return (
     <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-10">
-      {/* Top Breadcrumb + 3D Lab shortcut */}
+      {/* Top Breadcrumb + 3D Lab & Gmail shortcuts */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <button
           type="button"
@@ -78,18 +93,31 @@ export const LessonPage: React.FC<{ lessonId: string }> = ({ lessonId }) => {
           <span>{t(UI_STRINGS.lesson.backToLibrary, lang)}</span>
         </button>
 
-        {lesson.linked3DComponent && (
+        <div className="flex flex-wrap items-center gap-2.5">
           <button
             type="button"
-            onClick={() =>
-              navigate({ view: 'lab', focusComponent: lesson.linked3DComponent })
-            }
-            className="px-4 py-2 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/40 text-cyan-300 text-xs font-semibold inline-flex items-center gap-2 transition-colors"
+            onClick={handleShareViaGmail}
+            className="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold inline-flex items-center gap-2 transition-colors"
           >
-            <Box className="w-4 h-4" />
-            <span>{t(UI_STRINGS.lesson.inspectIn3D, lang)}</span>
+            <Mail className="w-4 h-4 text-cyan-400" />
+            <span>
+              {lang === 'ar' ? 'إرسال الملخص عبر Gmail' : 'Email Notes via Gmail'}
+            </span>
           </button>
-        )}
+
+          {lesson.linked3DComponent && (
+            <button
+              type="button"
+              onClick={() =>
+                navigate({ view: 'lab', focusComponent: lesson.linked3DComponent })
+              }
+              className="px-4 py-2 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/40 text-cyan-300 text-xs font-semibold inline-flex items-center gap-2 transition-colors"
+            >
+              <Box className="w-4 h-4" />
+              <span>{t(UI_STRINGS.lesson.inspectIn3D, lang)}</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Lesson Title Header (Bilingual EN & AR) */}

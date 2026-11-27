@@ -73,6 +73,15 @@ export const Footer: React.FC = () => {
                 {t(UI_STRINGS.nav.articles, lang)}
               </button>
             </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => navigate({ view: 'mail' })}
+                className="hover:text-cyan-300 transition-colors"
+              >
+                {t(UI_STRINGS.nav.mail, lang)}
+              </button>
+            </li>
           </ul>
 
           <div className="pt-3 flex items-center gap-3">

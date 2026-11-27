@@ -129,4 +129,5 @@ export type PageRoute =
   | { view: 'learning'; categoryId?: CategoryId }
   | { view: 'lesson'; lessonId: string }
   | { view: 'lab'; focusComponent?: PCComponentId }
-  | { view: 'articles'; articleId?: string };
+  | { view: 'articles'; articleId?: string }
+  | { view: 'mail'; prefillSubject?: string; prefillBody?: string };

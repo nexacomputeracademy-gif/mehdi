@@ -16,9 +16,10 @@ export const Navbar: React.FC = () => {
     },
     { key: 'lab' as const, label: t(UI_STRINGS.nav.lab, lang), active: route.view === 'lab' },
     { key: 'articles' as const, label: t(UI_STRINGS.nav.articles, lang), active: route.view === 'articles' },
+    { key: 'mail' as const, label: t(UI_STRINGS.nav.mail, lang), active: route.view === 'mail' },
   ];
 
-  const handleNav = (view: 'home' | 'learning' | 'lab' | 'articles') => {
+  const handleNav = (view: 'home' | 'learning' | 'lab' | 'articles' | 'mail') => {
     setMobileOpen(false);
     navigate({ view });
   };
